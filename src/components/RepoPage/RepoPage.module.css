@@ -1,0 +1,25 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    border: 2px solid rgb(197, 97, 197);
+    padding: 20px;
+    margin: 5px;
+}
+.header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+.header__name {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+.header__text {
+    color: rgb(160, 52, 33);
+    margin-bottom: 10px;
+}
+.description {
+}
+.date {
+    color: rgb(105, 103, 103);
+}
