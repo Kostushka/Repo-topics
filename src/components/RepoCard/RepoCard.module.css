@@ -1,0 +1,14 @@
+.container {
+    margin: 20px 0;
+}
+
+.button {
+    padding: 5px 10px;
+    background-color: rgb(197, 163, 230);
+    border: 1px solid #000;
+    border-radius: 3px;
+}
+.button:hover {
+    background-color: rgb(148, 90, 202);
+    cursor: pointer;
+}
