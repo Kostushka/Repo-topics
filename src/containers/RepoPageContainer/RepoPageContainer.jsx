@@ -1,19 +1,31 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getRepo } from '../../store/reducers/repoReducer';
+import { getRepo, setCurrentPage } from '../../store/reducers/repoReducer';
 import RepoPage from '../../components/RepoPage/RepoPage';
 import styles from './RepoPageContainer.module.css';
+import { pagesCreator } from '../../utils/pagesCreator';
 
 const RepoPageContainer = () => {
     const [inputValue, setInputValue] = useState('');
+
     const dispatch = useDispatch();
+
     const repos = useSelector((state) => state.repo.items);
     const isFetching = useSelector((state) => state.repo.isFetching);
+    const currentPage = useSelector((state) => state.repo.currentPage);
+    const perPage = useSelector((state) => state.repo.perPage);
+    const totalCount = useSelector((state) => state.repo.totalCount);
+
+    const pagesCount = Math.ceil(totalCount / perPage);
+    const pages = [];
+    pagesCreator(pages, pagesCount, currentPage);
+
     useEffect(() => {
-        dispatch(getRepo());
-    }, []);
+        dispatch(getRepo(inputValue, perPage, currentPage));
+    }, [currentPage]);
     const onSearchButtonClick = (e) => {
-        dispatch(getRepo(inputValue));
+        dispatch(setCurrentPage(1));
+        dispatch(getRepo(inputValue, perPage, currentPage));
         setInputValue('');
     };
     const onKeyDownPress = (e) => {
@@ -44,6 +56,21 @@ const RepoPageContainer = () => {
             ) : (
                 repos.map((repo) => <RepoPage key={repo.name} repo={repo} />)
             )}
+            <div className={styles.pages}>
+                {pages.map((page, index) => (
+                    <span
+                        key={index}
+                        className={
+                            currentPage === page
+                                ? styles.current__page
+                                : styles.page
+                        }
+                        onClick={() => dispatch(setCurrentPage(page))}
+                    >
+                        {page}
+                    </span>
+                ))}
+            </div>
         </div>
     );
 };

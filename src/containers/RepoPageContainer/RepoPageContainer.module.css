@@ -9,6 +9,24 @@
 .search__button {
     padding: 10px;
 }
+.pages {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+.current__page,
+.page {
+    margin: 0 10px;
+    padding: 5px 10px;
+    border: 2px solid gray;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.current__page {
+    border: 2px solid tomato;
+    font-weight: bold;
+    cursor: auto;
+}
 .fetching {
     margin: 30vh auto;
     width: 100px;
