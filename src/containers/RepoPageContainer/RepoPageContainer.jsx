@@ -4,6 +4,7 @@ import { getRepo, setCurrentPage } from '../../store/reducers/repoReducer';
 import RepoPage from '../../components/RepoPage/RepoPage';
 import styles from './RepoPageContainer.module.css';
 import { pagesCreator } from '../../utils/pagesCreator';
+import { Redirect } from 'react-router';
 
 const RepoPageContainer = () => {
     const [inputValue, setInputValue] = useState('');
@@ -12,6 +13,7 @@ const RepoPageContainer = () => {
 
     const repos = useSelector((state) => state.repo.items);
     const isFetching = useSelector((state) => state.repo.isFetching);
+    const isFetchError = useSelector((state) => state.repo.isFetchError);
     const currentPage = useSelector((state) => state.repo.currentPage);
     const perPage = useSelector((state) => state.repo.perPage);
     const totalCount = useSelector((state) => state.repo.totalCount);
@@ -23,6 +25,11 @@ const RepoPageContainer = () => {
     useEffect(() => {
         dispatch(getRepo(inputValue, perPage, currentPage));
     }, [currentPage]);
+
+    if (isFetchError) {
+        return <Redirect to='/error' />;
+    }
+
     const onSearchButtonClick = (e) => {
         dispatch(setCurrentPage(1));
         dispatch(getRepo(inputValue, perPage, currentPage));
